@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.yundao.common.mapper.resource.ResourceMapper">
+
+    <resultMap id="ResourceResult" type="com.yundao.common.model.base.ResourceModel" extends="com.yundao.common.mapper.base.ResourceModelMapper.BaseResultMap"> 
+    </resultMap>
+    <update id="updateSubset">
+        UPDATE resource SET code = REPLACE(code, ${oldCode}, ${newCode}) WHERE code LIKE '${oldCode}%' AND code != '${oldCode}'
+    </update>
+
+    <select id="getByRoleResources" resultMap="ResourceResult">
+        SELECT * FROM resource WHERE is_delete = 0 AND is_enabled = 1
+        <foreach collection="list" item="item" open="AND id IN(" separator="," close=")">
+            #{item.resourceId}
+        </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.yundao.common.mapper.roleresource.RoleResourceMapper">
+
+    <resultMap id="RoleResourceResult" type="com.yundao.common.model.base.RoleResourceModel" extends="com.yundao.common.mapper.base.RoleResourceModelMapper.BaseResultMap"> 
+    </resultMap>
+    <select id="getByRoles" resultMap="RoleResourceResult">
+        SELECT * FROM role_resource WHERE is_delete = 0
+        <foreach collection="list" item="item" open="AND role_id IN(" separator="," close=")">
+            #{item.id}
+        </foreach>
+    </select>
+
+    <select id="getByRoleId" resultMap="RoleResourceResult">
+        SELECT * FROM  role_resource WHERE is_delete = 0 AND role_id=#{roleId}
+    </select>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yundao.common.mapper.timedtask.JobsPropsMapper">
+
+    <resultMap type="com.yundao.common.model.base.timedtask.JobsPropsModel" id="jobsPropsModelMap">
+        <id property="id" column="id"/>
+        <result property="jobsId" column="jobs_id"/>
+        <result property="propName" column="prop_name"/>
+        <result property="propValue" column="prop_value"/>
+        <result property="status" column="status"/>
+	    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+	    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+	    <result column="update_user_id" jdbcType="BIGINT" property="updateUserId" />
+	    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    </resultMap>
+
+    <insert id="insert" keyProperty="id" parameterType="com.yundao.common.model.base.timedtask.JobsPropsModel" useGeneratedKeys="true">
+        INSERT INTO qrtz_yd_jobs_props (id, jobs_id, prop_name, prop_value, status, create_user_id, create_date)
+        VALUES (#{id}, #{jobsId}, #{propName}, #{propValue}, #{status}, #{createUserId}, #{createDate})
+    </insert>
+
+    <select id="getByJobsId" resultMap="jobsPropsModelMap">
+        SELECT * FROM qrtz_yd_jobs_props WHERE jobs_id = #{jobsId}
+    </select>
+
+    <select id="getByJobsIdAndPropName" resultMap="jobsPropsModelMap">
+        SELECT * FROM qrtz_yd_jobs_props WHERE jobs_id = #{jobsId} AND prop_name = #{propName} AND status = 1 LIMIT 1
+    </select>
+
+    <delete id="deleteByJobsId">
+        DELETE FROM qrtz_yd_jobs_props WHERE jobs_id = #{jobsId}
+    </delete>
+
+</mapper>

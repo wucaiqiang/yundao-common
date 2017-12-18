@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yundao.common.mapper.timedtask.JobsMapper">
+
+    <resultMap type="com.yundao.common.model.base.timedtask.JobsModel" id="jobsModelMap">
+        <id property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="jobGroupId" column="job_group_id"/>
+        <result property="triggerGroupId" column="trigger_group_id"/>
+        <result property="jobClass" column="job_class"/>
+        <result property="description" column="description"/>
+        <result property="status" column="status"/>
+	    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+	    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+	    <result column="update_user_id" jdbcType="BIGINT" property="updateUserId" />
+	    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+    </resultMap>
+
+    <insert id="insert" keyProperty="id" parameterType="com.yundao.common.model.base.timedtask.JobsModel" useGeneratedKeys="true">
+        insert into qrtz_yd_jobs (id, code, name, job_group_id, trigger_group_id, job_class,description, status,
+        create_user_id, create_date, start_time, end_time)
+        values (#{id}, #{code}, #{name}, #{jobGroupId}, #{triggerGroupId}, #{jobClass}, #{description},
+        #{status}, #{createUserId}, #{createDate}, #{startTime}, #{endTime})
+    </insert>
+
+    <select id="getByCode" resultMap="jobsModelMap">
+        SELECT * FROM qrtz_yd_jobs WHERE code = #{code}
+    </select>
+
+    <select id="getById" resultMap="jobsModelMap">
+        SELECT * FROM qrtz_yd_jobs WHERE id = #{id}
+    </select>
+
+    <select id="getValid" resultMap="jobsModelMap">
+        <![CDATA[
+        SELECT * FROM qrtz_yd_jobs WHERE status = 1 AND
+        (
+          (start_time IS NULL AND end_time IS NULL)
+          OR (end_time IS NULL AND NOW() >= start_time)
+          OR (start_time IS NULL AND NOW() <= end_time)
+          OR (NOW() BETWEEN start_time AND end_time)
+        )
+        ]]>
+    </select>
+
+    <select id="getExpire" resultMap="jobsModelMap">
+        <![CDATA[
+        SELECT * FROM qrtz_yd_jobs WHERE status = 0 OR NOW() > end_time
+        ]]>
+    </select>
+
+    <delete id="deleteById">
+        DELETE FROM qrtz_yd_jobs WHERE id = #{id}
+    </delete>
+
+</mapper>

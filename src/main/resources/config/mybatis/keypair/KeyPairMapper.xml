@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.yundao.common.mapper.keypair.KeyPairMapper">
+
+    <resultMap id="KeyPairResult" type="com.yundao.common.model.base.KeyPairModel" extends="com.yundao.common.mapper.base.KeyPairModelMapper.BaseResultMap"> 
+    </resultMap>
+</mapper>

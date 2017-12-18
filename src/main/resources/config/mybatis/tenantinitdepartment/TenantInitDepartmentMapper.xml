@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.yundao.common.mapper.tenantinitdepartment.TenantInitDepartmentMapper">
+
+    <resultMap id="TenantInitDepartmentResult" type="com.yundao.common.model.base.TenantInitDepartmentModel" extends="com.yundao.common.mapper.base.TenantInitDepartmentModelMapper.BaseResultMap"> 
+    </resultMap>
+    <resultMap id="tenantDepartmentResult" type="com.yundao.common.model.base.DepartmentModel" extends="com.yundao.common.mapper.base.DepartmentModelMapper.BaseResultMap">
+    </resultMap>
+    <select id="getTenantDepartment" resultMap="tenantDepartmentResult">
+        select d.* from tenant_init_department td,department d where td.tenant_id = #{tenantId} AND td.department_id = d.id AND td.is_delete = 0 AND td.is_enabled = 1
+        <if test="systemCode != null">
+            AND system_code = #{systemCode}
+        </if>
+    </select>
+</mapper>

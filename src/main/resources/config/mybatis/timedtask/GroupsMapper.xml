@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yundao.common.mapper.timedtask.GroupsMapper">
+
+    <resultMap type="com.yundao.common.model.base.timedtask.GroupsModel" id="groupsModelMap">
+        <id property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="status" column="status"/>
+        <result property="type" column="type"/>
+	    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+	    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+	    <result column="update_user_id" jdbcType="BIGINT" property="updateUserId" />
+	    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    </resultMap>
+
+    <insert id="insert" keyProperty="id" parameterType="com.yundao.common.model.base.timedtask.GroupsModel" useGeneratedKeys="true">
+        insert into qrtz_yd_groups (id, code, name, description, status, type, create_user_id, create_date)
+        values (#{id}, #{code}, #{name}, #{description}, #{status}, #{type}, #{createUserId}, #{createDate})
+    </insert>
+
+    <select id="getByCode" resultMap="groupsModelMap">
+        SELECT * FROM qrtz_yd_groups WHERE code = #{code}
+    </select>
+
+    <select id="getById" resultMap="groupsModelMap">
+        SELECT * FROM qrtz_yd_groups WHERE id = #{id}
+    </select>
+
+    <select id="getByType" resultMap="groupsModelMap">
+        SELECT * FROM qrtz_yd_groups WHERE type = #{type}
+    </select>
+
+    <delete id="deleteByIds">
+        DELETE FROM qrtz_yd_groups WHERE id IN
+        <foreach collection="idList" open="(" close=")" item="each" separator=",">
+            #{each}
+        </foreach>
+    </delete>
+
+</mapper>

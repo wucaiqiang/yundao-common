@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.yundao.common.mapper.ticket.TicketMapper">
+
+    <resultMap id="TicketResult" type="com.yundao.common.model.base.TicketModel" extends="com.yundao.common.mapper.base.TicketModelMapper.BaseResultMap"> 
+    </resultMap>
+</mapper>

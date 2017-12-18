@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.yundao.common.mapper.department.DepartmentMapper">
+
+    <resultMap id="DepartmentResult" type="com.yundao.common.model.base.DepartmentModel" extends="com.yundao.common.mapper.base.DepartmentModelMapper.BaseResultMap">
+    </resultMap>
+
+    <update id="updateSubset">
+        UPDATE department SET code = REPLACE(code, ${oldCode}, ${newCode}) WHERE code LIKE '${oldCode}%' AND code != '${oldCode}'
+    </update>
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.yundao.common.mapper.tenant.TenantMapper">
+
+	<resultMap id="TenantResult" type="com.yundao.common.model.base.TenantModel"
+		extends="com.yundao.common.mapper.base.TenantModelMapper.BaseResultMap">
+	</resultMap>
+	<select id="selectListByAccountId" parameterType="long"
+		resultMap="TenantResult">
+		SELECT DISTINCT t.* from user_tenant ut LEFT JOIN tenant t
+		on ut.tenant_id=t.id
+		where ut.user_id=#{userId}
+	</select>
+</mapper>

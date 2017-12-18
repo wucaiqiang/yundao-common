@@ -1,0 +1,11 @@
+1. 执行sql文件（common_resource_role_init.sql）, 在公共数据库库
+
+
+
+
+
+
+
+1. 创建租户信息 common_tenant_init.sql
+2. 执行接口   :8202/user/init?tenantId=
+3. tenant_admin_user_init.sql

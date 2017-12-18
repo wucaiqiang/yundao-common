@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.yundao.common.mapper.tenantinitrole.TenantInitRoleMapper">
+
+    <resultMap id="TenantInitRoleResult" type="com.yundao.common.model.base.TenantInitRoleModel" extends="com.yundao.common.mapper.base.TenantInitRoleModelMapper.BaseResultMap"> 
+    </resultMap>
+
+    <resultMap id="tenantRoleResult" type="com.yundao.common.model.base.RoleModel" extends="com.yundao.common.mapper.base.RoleModelMapper.BaseResultMap">
+    </resultMap>
+
+    <select id="getRoleModels" resultMap="tenantRoleResult">
+      select r.* from tenant_init_role tr,role r where tr.tenant_id = #{tenantId} AND tr.role_id = r.id AND tr.is_delete = 0 AND tr.is_enabled = 1 AND r.is_delete = 0 AND r.is_enabled = 1
+        <if test="systemCode != null">
+            AND system_code = #{systemCode}
+        </if>
+    </select>
+</mapper>
